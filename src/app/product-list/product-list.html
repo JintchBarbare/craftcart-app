@@ -1,0 +1,15 @@
+<div class="product-catalog">
+  <h2>CraftCart კატალოგი</h2>
+  
+  <ul class="product-list">
+    @for (p of products; track p.id) {
+      <app-product-card 
+        [product]="p" 
+        [isFavorite]="favorites.has(p.id)"
+        (addToCart)="onAddToCart($event)"
+        (toggleFavorite)="onToggleFavorite($event)" />
+    } @empty {
+      <li>პროდუქტები ჯერ არ არის.</li>
+    }
+  </ul>
+</div>

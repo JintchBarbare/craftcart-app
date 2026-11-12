@@ -1,0 +1,24 @@
+<li class="product-card">
+  <!-- რჩეულების ღილაკი -->
+  <button class="fav-btn" (click)="onToggleFavorite()">
+    @if (isFavorite()) {
+        ♥
+    } @else {
+        ♡
+    }
+  </button>
+
+  <h3>{{ product().name }}</h3>
+  <p>ფასი: {{ product().price }} ₾</p>
+  <p>კატეგორია: {{ product().category }}</p>
+
+  @if (product().isSale) {
+    <span class="badge sale">ფასდაკლება</span>
+  }
+
+  @if (product().inStock) {
+    <button class="add-btn" (click)="onAddToCart()">კალათაში დამატება</button>
+  } @else {
+    <span class="out-of-stock">ამოწურულია</span>
+  }
+</li>
