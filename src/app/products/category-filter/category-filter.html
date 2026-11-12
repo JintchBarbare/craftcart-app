@@ -1,0 +1,15 @@
+<div class="category-filter">
+  <button 
+    [class.active]="selected() === ''" 
+    (click)="onSelect('')">
+    ყველა
+  </button>
+
+  @for (cat of categories(); track cat) {
+    <button 
+      [class.active]="cat === selected()" 
+      (click)="onSelect(cat)">
+      {{ cat }}
+    </button>
+  }
+</div>

@@ -1,14 +1,15 @@
-import { Component, inject } from '@angular/core'; 
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../models/product.model';
 import { ProductCard } from '../products/product-card/product-card';
+import { CategoryFilter } from '../products/category-filter/category-filter'; 
 import { CartService } from '../services/cart-service';
 import { FavoritesService } from '../services/favorites-service';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, ProductCard],
+  imports: [CommonModule, ProductCard, CategoryFilter], 
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss',
 })
@@ -22,9 +23,25 @@ export class ProductList {
     { id: 'p6', name: 'Maple Spoon', price: 22, category: 'wood', inStock: false }
   ];
 
-
   cart = inject(CartService);
   favorites = inject(FavoritesService);
+
+ 
+  categories: string[] = ['pottery', 'textiles', 'wood'];
+
+  selectedCategory = signal<string>('');
+
+  get visibleProducts(): Product[] {
+    const cat = this.selectedCategory();
+    if (!cat) {
+      return this.products;
+    }
+    return this.products.filter(p => p.category === cat);
+  }
+
+  onSelectCategory(category: string) {
+    this.selectedCategory.set(category);
+  }
 
   onAddToCart(product: Product) {
     this.cart.add(product);

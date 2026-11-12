@@ -1,8 +1,13 @@
 <div class="product-catalog">
   <h2>CraftCart კატალოგი</h2>
   
+  <app-category-filter 
+    [categories]="categories"
+    [selected]="selectedCategory()"
+    (categoryChange)="onSelectCategory($event)" />
+
   <ul class="product-list">
-    @for (p of products; track p.id) {
+    @for (p of visibleProducts; track p.id) {
       <app-product-card 
         [product]="p" 
         [isFavorite]="favorites.has(p.id)"
